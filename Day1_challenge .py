@@ -12,4 +12,3 @@ print("Iam feeling :)")
 
 print("You can follow my progress at replit.com/@kumardhirajkuma")
 
-#replit100DaysfCode
