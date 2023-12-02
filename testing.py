@@ -1,37 +1,32 @@
-from tkinter import *
+import csv
 
-import speedtest
+# Specify the path to the input CSV file
+input_csv_path = 'E:/DHIRAJ/100_days_python_challenge/01122023.csv'
 
-# Initializing GUI Window:
-root=Tk()
-root.geometry("300x400")
-root.resizable(True,True)
-root.title("Speed Test")
-root.configure(bg='#E6E6FA')
+# Specify the path to the output CSV file
+output_csv_path = 'E:/DHIRAJ/100_days_python_challenge/output.csv'
 
-# Creating Labels and Button:
-Label(root,text="Internet Speed Test",font=("Arial,bold",22),bg='#8B8386',fg='White',width=30).pack(pady=10)
-l1=Label(root,text="Download Speed :",font=("Arial,bold",15),bg='#E6E6FA')
-l1.place(x=10,y=80)
-ldspd=Label(root,text="",font=("Arial,bold",15),bg='#E6E6FA',fg='#089927')
-ldspd.place(x=180,y=80)
-l2=Label(root,text="Upload Speed :",font=("Arial,bold",15),bg='#E6E6FA')
-l2.place(x=10,y=130)
-luspd=Label(root,text="",font=("Arial,bold",15),bg='#E6E6FA',fg='#089927')
-luspd.place(x=180,y=130)
+# Specify the string you want to remove
+string_to_remove = "Service Area Code","Phone Numbers","Preferences","Opstype","Phone Type"
 
-btn=Button(root,text="Check",font=('Arial,bold',15),bd=5,bg='#8B8386',fg='White',activebackground='#8B8386',activeforeground='White')
-btn.place(x=125,y=190)
+# Open the input and output CSV files
+with open(input_csv_path, 'r', newline='', encoding='utf-8') as input_file, \
+        open(output_csv_path, 'w', newline='', encoding='utf-8') as output_file:
 
+    # Create CSV reader and writer objects
+    csv_reader = csv.reader(input_file)
+    csv_writer = csv.writer(output_file)
 
-root.mainloop()
+    # Iterate through the rows in the input CSV file
+    for row in csv_reader:
+        # Convert the tuple row to a string
+        row_str = ','.join(row)
+        
+        # Check if the specified string is not in the row
+        if string_to_remove not in row_str:
+            # Write the row to the output CSV file
+            csv_writer.writerow(row)
 
-
-
-def check():
-    spd=speedtest.Speedtest()
-    spd.get_servers()
-    dspd=str(round(spd.download() / (10**6),3)) + " Mbps"
-    uspd=str(round(spd.upload() / (10**6),3)) + " Mbps"
-    ldspd.config(text=dspd)
-    luspd.config(text=uspd)
+# Optional: Replace the original file with the modified one
+# import os
+# os.replace(output_csv_path, input_csv_path)
