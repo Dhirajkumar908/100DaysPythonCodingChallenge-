@@ -1,5 +1,5 @@
 
-#bingo game
+#bingo game~
 import random, time, os
 
 bingo = []
